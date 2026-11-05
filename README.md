@@ -8,13 +8,32 @@ Ambiente de simulação em **Sistemas Multiagentes (SMA)** para estudo empírico
 
 ---
 
+## O Dilema do Prisioneiro
+
+O ambiente modela o **Dilema do Prisioneiro**, um problema clássico da Teoria dos Jogos onde dois participantes escolhem simultaneamente entre **Cooperar (C)** ou **Trair/Desertar (D)** sem comunicação prévia. 
+
+A dinâmica é regida pela seguinte matriz de recompensas (*payoff*):
+
+| Jogador A \ Jogador B | Cooperar (C) | Trair (D) |
+| :--- | :---: | :---: |
+| **Cooperar (C)** | (2, 2) | (0, 4) |
+| **Trair (D)** | (4, 0) | (0, 0) |
+
+* **Cooperação mútua (C, C):** Ambos recebem recompensa moderada (2 pontos cada).
+* **Traição unilateral (D, C ou C, D):** O desertor obtém o ganho máximo (4 pontos) e o cooperador fica sem pontuar (0 pontos).
+* **Traição mútua (D, D):** Ambos anulam os ganhos e recebem 0 pontos.
+
+O objetivo do experimento é avaliar se agentes dotados de algoritmos de aprendizado conseguem convergir para estratégias estáveis ou explorar o comportamento de oponentes com perfis distintos.
+
+---
+
 ## Componentes
 
-* **`MainAgent.java`:** Coordena a simulação, valida regras e sincroniza estados e turnos.
+* **`MainAgent.java`:** Coordena a simulação, atua como juiz, valida rodadas e computa pontuações.
 * **`GUI.java`:** Interface gráfica para acompanhamento visual e logs em tempo real.
-* **`RL_Agent.java`:** Agente com aprendizado por reforço via algoritmo **Q-Learning**.
+* **`RL_Agent.java`:** Agente com aprendizado por reforço via **Q-Learning**.
 * **`NN_Agent.java`:** Agente com tomada de decisão baseada em **Redes Neurais**.
-* **`RandomAgent.java`:** Agente com ações aleatórias (linha de base/baseline).
+* **`RandomAgent.java`:** Agente com escolhas puramente aleatórias (linha de base/baseline).
 * **`SOM.java`:** Módulo de agrupamento via **Mapas Auto-organizáveis de Kohonen**.
 
 ---
@@ -28,39 +47,3 @@ GUI_JADE_Tornike_Sikharulidze/GUI_JADE/
 ├── RL_Agent.java / NN_Agent.java   # Agentes com IA
 ├── RandomAgent.java / SOM.java     # Baseline e agrupamento
 └── *.sh                            # Scripts de execução
-```
-
----
-
-## Como Executar
-
-### Pré-requisitos
-* Java JDK 8+
-* Ambiente Linux/Bash
-
-### Execução
-
-Acesse o diretório, garanta permissão aos scripts e execute o cenário desejado:
-
-```bash
-cd GUI_JADE_Tornike_Sikharulidze/GUI_JADE
-chmod +x *.sh
-```
-
-* **Interface padrão:**
-  ```bash
-  ./example.sh
-  ```
-* **Q-Learning vs. Random (Baseline):**
-  ```bash
-  ./RL_Agent_vs_RandomAgent.sh
-  ```
-* **Random vs. Random (Controle):**
-  ```bash
-  ./RandomAgent_vs_RandomAgent.sh
-  ```
-
-> **Recompilação (em caso de alterações no código):**
-> ```bash
-> javac -cp .:lib/jade.jar *.java
-> ```
